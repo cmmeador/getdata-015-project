@@ -3,6 +3,8 @@ title: "README"
 output: html_document
 ---
 
+From the course assignment:
+
 You should create one R script called run_analysis.R that does the following. 
 
 1. Merges the training and the test sets to create one data set.
@@ -11,8 +13,19 @@ You should create one R script called run_analysis.R that does the following.
 4. Appropriately labels the data set with descriptive variable names. 
 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
+My submission includes a script, run_analysis.R, which itself is pretty thoroughly commented but I will provide a brief overview here:
 
-From the dataset README:
+First, it saves the current working directory and sets the wd to the folder where I have my repo, code, and data.  It restores the original working directory at the end.
+
+The code then reads in the relevant data files using `read.csv` with different separator options depending on the source data file.  I added a field called `source` which identifies each subject as belonging to the test or the train set, but ultimately did not include this information in the final summary set.  The descriptive feature names are used as column names, and the activity labels are included via `merge()`.  The data sets are combined using rbind.
+
+I used grep to filter out only those variables I am interested in -- the mean() and std() values described in `features_info.txt`.  These columns, along with the `subject_id` and `activity_label`, are subsetted and stored in a data frame called `extractedData`, which should satisfy parts 1-4 of the assignment. 
+
+To address part 5 of the assignment, I used the `dplyr` package to apply the `mean()` function to all of the variables in my `extractedData` df grouping by `subject_id` and `activity_label`.
+
+
+
+The following information is copied from the dataset README for reference:
 
 ******************************************************************
 Human Activity Recognition Using Smartphones Dataset
